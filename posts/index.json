@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "hello-world",
+    "title": "블로그를 시작합니다",
+    "date": "2026-11-17",
+    "description": "프레임워크 없이 HTML, CSS, JavaScript만으로 만든 블로그의 첫 글이에요.",
+    "tags": ["소개", "블로그"]
+  },
+  {
+    "slug": "markdown-guide",
+    "title": "마크다운 문법 안내",
+    "date": "2026-11-18",
+    "description": "이 블로그에서 쓸 수 있는 마크다운 문법을 한 곳에 모았어요.",
+    "tags": ["마크다운", "안내"]
+  },
+  {
+    "slug": "today-i-learned",
+    "title": "오늘 배운 것",
+    "date": "2026-11-18",
+    "description": "클로드 코드로 블로그를 만들면서 알게 된 HTML, CSS, JavaScript의 역할을 정리했어요.",
+    "tags": ["HTML", "CSS", "JavaScript", "회고"]
+  }
+]
