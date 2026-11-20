@@ -4,5 +4,11 @@
     "title": "모아 — 숫자 타일 합치기",
     "description": "타일을 밀어 같은 숫자를 모으면 두 배가 돼요. 키보드와 터치 모두 지원하고, 최고 점수가 저장돼요.",
     "preview": "preview.svg"
+  },
+  {
+    "slug": "pixel-editor",
+    "title": "콕콕 — 16×16 픽셀 아트",
+    "description": "16×16 칸에 점을 콕콕 찍어 그림을 그리고 PNG로 저장해요. 마우스·터치·키보드로 그릴 수 있고, 그리던 그림은 자동으로 남아요.",
+    "preview": "preview.svg"
   }
 ]
