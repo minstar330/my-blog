@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="방향키나 스와이프로 타일을 밀어, 같은 숫자끼리 모아 더 큰 수를 만드는 퍼즐.">
+  <title>모아 — 숫자 타일 합치기</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='17' height='17' rx='5' fill='%231f7a90'/%3E%3Crect x='12' y='12' width='17' height='17' rx='5' fill='%236a3fb5' fill-opacity='0.9'/%3E%3C/svg%3E">
+  <script>
+    // 블로그에서 고른 테마(localStorage 'theme')를 렌더링 전에 적용해 깜빡임을 막는다.
+    // 앱은 이 값을 읽기만 하고 쓰지 않는다.
+    (function () {
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark' || saved === 'light') {
+          document.documentElement.setAttribute('data-theme', saved);
+        }
+      } catch (e) {
+        // 저장소를 쓸 수 없으면 OS 설정을 따른다.
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <a class="back-link" href="../../">← 블로그로</a>
+      <h1 class="app-title">모아</h1>
+      <p class="app-subtitle" lang="en">Slide &amp; Merge Puzzle</p>
+    </header>
+
+    <main class="app-main" id="app">
+      <section class="scoreboard" aria-label="점수판">
+        <div class="score-row">
+          <div class="score-box">
+            <span class="score-label">점수</span>
+            <span class="score-value" id="score">0</span>
+          </div>
+          <div class="score-box">
+            <span class="score-label">최고</span>
+            <span class="score-value" id="best">0</span>
+          </div>
+        </div>
+        <span class="score-gain" id="score-gain" aria-hidden="true"></span>
+      </section>
+
+      <div class="board-wrap">
+        <div class="board" id="board" role="group" aria-label="게임 보드, 방향키나 스와이프로 조작">
+          <div class="cell-layer" id="cell-layer" aria-hidden="true"></div>
+          <div class="tile-layer" id="tile-layer" aria-hidden="true"></div>
+        </div>
+        <div class="panel" id="panel" role="dialog" aria-modal="false" aria-labelledby="panel-title" hidden>
+          <h2 class="panel-title" id="panel-title"></h2>
+          <p class="panel-text" id="panel-text"></p>
+          <div class="panel-actions" id="panel-actions"></div>
+        </div>
+      </div>
+
+      <button class="button new-game" type="button" id="new-game">새 게임</button>
+      <p class="file-notice" id="file-notice" hidden></p>
+    </main>
+
+    <footer class="app-footer">
+      <p>방향키·WASD 또는 스와이프로 밀어요.</p>
+    </footer>
+  </div>
+
+  <div class="visually-hidden" id="live" aria-live="polite"></div>
+
+  <script>
+    // 파일을 직접 열면(file://) 브라우저가 모듈 스크립트를 막는다.
+    // 그래서 이 안내만은 모듈이 아닌 일반 스크립트로 보여준다.
+    if (location.protocol === 'file:') {
+      const notice = document.getElementById('file-notice');
+      notice.textContent =
+        '로컬 서버로 열어 주세요. 파일을 직접 열면 게임을 불러올 수 없어요. ' +
+        '저장소 루트에서 터미널로 node serve.js 를 실행한 뒤 ' +
+        'localhost:8000/apps/tile-merge/ 로 접속해 주세요.';
+      notice.hidden = false;
+    }
+  </script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

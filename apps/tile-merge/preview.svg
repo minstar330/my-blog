@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" role="img" aria-labelledby="preview-title">
+  <title id="preview-title">모아 게임 화면 미리보기</title>
+  <!-- 배경: 블로그 라이트/다크 어느 쪽에서도 어울리도록 직접 칠한 남색 -->
+  <rect width="640" height="400" fill="#0f1220"/>
+
+  <!-- 제목 -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', 'Noto Sans KR', 'Malgun Gothic', sans-serif">
+    <text x="48" y="178" fill="#e6e9f2" font-size="76" font-weight="800">모아</text>
+    <text x="50" y="222" fill="#9aa3b8" font-size="22">Slide &amp; Merge Puzzle</text>
+    <rect x="50" y="252" width="56" height="6" rx="3" fill="#5fd4c0"/>
+  </g>
+
+  <!-- 보드 일부 (4×4 칸) -->
+  <g transform="translate(0 9)">
+  <rect x="312" y="40" width="302" height="302" rx="18" fill="#1a1f33"/>
+  <g fill="#242a42">
+    <rect x="324" y="52" width="62" height="62" rx="10"/>
+    <rect x="396" y="52" width="62" height="62" rx="10"/>
+    <rect x="468" y="52" width="62" height="62" rx="10"/>
+    <rect x="540" y="52" width="62" height="62" rx="10"/>
+    <rect x="324" y="124" width="62" height="62" rx="10"/>
+    <rect x="396" y="124" width="62" height="62" rx="10"/>
+    <rect x="468" y="124" width="62" height="62" rx="10"/>
+    <rect x="540" y="124" width="62" height="62" rx="10"/>
+    <rect x="324" y="196" width="62" height="62" rx="10"/>
+    <rect x="396" y="196" width="62" height="62" rx="10"/>
+    <rect x="468" y="196" width="62" height="62" rx="10"/>
+    <rect x="540" y="196" width="62" height="62" rx="10"/>
+    <rect x="324" y="268" width="62" height="62" rx="10"/>
+    <rect x="396" y="268" width="62" height="62" rx="10"/>
+    <rect x="468" y="268" width="62" height="62" rx="10"/>
+    <rect x="540" y="268" width="62" height="62" rx="10"/>
+  </g>
+
+  <!-- 타일 -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', 'Noto Sans KR', 'Malgun Gothic', sans-serif" font-weight="700" text-anchor="middle">
+    <rect x="396" y="52" width="62" height="62" rx="10" fill="#2a3350"/>
+    <text x="427" y="94" font-size="28" fill="#e6e9f2">2</text>
+
+    <rect x="324" y="124" width="62" height="62" rx="10" fill="#2c4a5a"/>
+    <text x="355" y="166" font-size="28" fill="#e6e9f2">4</text>
+
+    <rect x="468" y="124" width="62" height="62" rx="10" fill="#1f6b63"/>
+    <text x="499" y="166" font-size="28" fill="#ffffff">8</text>
+
+    <rect x="396" y="196" width="62" height="62" rx="10" fill="#1f7a90"/>
+    <text x="427" y="238" font-size="26" fill="#ffffff">16</text>
+
+    <rect x="540" y="196" width="62" height="62" rx="10" fill="#2a69a8"/>
+    <text x="571" y="238" font-size="26" fill="#ffffff">32</text>
+
+    <rect x="468" y="268" width="62" height="62" rx="10" fill="#3552b5"/>
+    <text x="499" y="310" font-size="26" fill="#ffffff">64</text>
+
+    <rect x="540" y="268" width="62" height="62" rx="10" fill="#4a47b8"/>
+    <text x="571" y="308" font-size="21" fill="#ffffff">128</text>
+  </g>
+  </g>
+</svg>

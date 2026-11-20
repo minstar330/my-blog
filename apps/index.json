@@ -1,0 +1,8 @@
+[
+  {
+    "slug": "tile-merge",
+    "title": "모아 — 숫자 타일 합치기",
+    "description": "타일을 밀어 같은 숫자를 모으면 두 배가 돼요. 키보드와 터치 모두 지원하고, 최고 점수가 저장돼요.",
+    "preview": "preview.svg"
+  }
+]

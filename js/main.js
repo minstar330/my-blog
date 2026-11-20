@@ -10,6 +10,7 @@ const SITE_TITLE = 'My Blog';
 const app = document.getElementById('app');
 
 let postsCache = null;
+let appsCache = null;
 // 빠르게 여러 번 이동했을 때 늦게 도착한 응답이 화면을 덮어쓰지 않게 하는 번호
 let renderId = 0;
 
@@ -38,6 +39,26 @@ async function loadPosts() {
   return postsCache;
 }
 
+// 미리보기 파일 이름: 영문·숫자·하이픈·밑줄과 이미지 확장자만 허용한다.
+function isValidPreview(name) {
+  return typeof name === 'string' && /^[a-z0-9_-]+\.(svg|png|jpe?g|webp)$/i.test(name);
+}
+
+// 웹앱 목록은 글 목록의 부가 정보라, 불러오지 못해도 글 목록은 그대로 보여준다.
+async function loadApps() {
+  if (appsCache) return appsCache;
+
+  try {
+    const res = await fetch('apps/index.json', { cache: 'no-cache' });
+    if (!res.ok) return [];
+    const data = await res.json();
+    appsCache = Array.isArray(data) ? data.filter((item) => item && isValidSlug(item.slug)) : [];
+  } catch (error) {
+    return [];
+  }
+  return appsCache;
+}
+
 async function loadPost(slug) {
   const res = await fetch(`posts/${slug}.md`, { cache: 'no-cache' });
   if (res.status === 404) return null;
@@ -59,6 +80,29 @@ function renderTags(tags) {
 function renderDate(date) {
   if (!date) return '';
   return `<time datetime="${escapeHtml(date)}">${escapeHtml(formatDate(date))}</time>`;
+}
+
+function renderAppCard(item) {
+  const href = `apps/${item.slug}/`;
+  const title = escapeHtml(item.title || item.slug);
+  const image = isValidPreview(item.preview)
+    ? `<img class="app-card-image" src="${href}${item.preview}" alt="" width="640" height="400" loading="lazy">`
+    : '';
+  return `
+    <li class="app-card">
+      ${image}
+      <h3 class="app-card-title"><a href="${href}">${title}</a></h3>
+      ${item.description ? `<p class="app-card-desc">${escapeHtml(item.description)}</p>` : ''}
+    </li>`;
+}
+
+function renderAppsSection(apps) {
+  if (apps.length === 0) return '';
+  return `
+    <section class="apps-section" aria-labelledby="apps-heading">
+      <h2 class="page-title" id="apps-heading">만든 것</h2>
+      <ul class="app-list">${apps.map(renderAppCard).join('')}</ul>
+    </section>`;
 }
 
 function renderMessage(title, text) {
@@ -90,13 +134,17 @@ function renderNotFound() {
 // ---------------------------------------------------------------------------
 
 async function showList(id) {
-  const posts = await loadPosts();
+  const [posts, apps] = await Promise.all([loadPosts(), loadApps()]);
   if (id !== renderId) return;
 
   document.title = SITE_TITLE;
+  const appsSection = renderAppsSection(apps);
 
   if (posts.length === 0) {
-    app.innerHTML = '<p class="empty">아직 글이 없어요.</p>';
+    app.innerHTML = `
+      <h1 class="visually-hidden">${SITE_TITLE}</h1>
+      ${appsSection}
+      <p class="empty">아직 글이 없어요.</p>`;
     return;
   }
 
@@ -105,9 +153,9 @@ async function showList(id) {
       (post) => `
       <li class="post-item">
         <article>
-          <h2 class="post-item-title">
+          <h3 class="post-item-title">
             <a href="#/post/${post.slug}">${escapeHtml(post.title || post.slug)}</a>
-          </h2>
+          </h3>
           <p class="post-meta">${renderDate(post.date)}</p>
           ${post.description ? `<p class="post-item-desc">${escapeHtml(post.description)}</p>` : ''}
           ${renderTags(post.tags)}
@@ -117,8 +165,12 @@ async function showList(id) {
     .join('');
 
   app.innerHTML = `
-    <h1 class="page-title">최근 글</h1>
-    <ul class="post-list">${items}</ul>`;
+    <h1 class="visually-hidden">${SITE_TITLE}</h1>
+    ${appsSection}
+    <section aria-labelledby="posts-heading">
+      <h2 class="page-title" id="posts-heading">최근 글</h2>
+      <ul class="post-list">${items}</ul>
+    </section>`;
 }
 
 async function showPost(slug, id) {

@@ -1,0 +1,526 @@
+/* 모아 — 앱 전체 스타일
+   모바일 우선으로 작성하고, 넓은 화면은 min-width 미디어 쿼리로 확장한다.
+   모든 색은 :root의 CSS 변수로 정의하고 컴포넌트에서는 변수만 쓴다. */
+
+/* ---------- 색 토큰: 라이트 ---------- */
+:root {
+  color-scheme: light;
+
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --text: #1b2030;
+  --text-muted: #545c70;
+  --border: #d9dee9;
+  --accent: #127a6c;
+  --accent-text: #ffffff;
+  --accent-hover: #0d5f54;
+  --board-bg: #dfe4ef;
+  --cell-bg: #ecf0f6;
+  --overlay-bg: rgb(244 246 251 / 0.88);
+
+  --tile-2-bg: #e3f4f0;
+  --tile-2-text: #1b2030;
+  --tile-4-bg: #c4e9e1;
+  --tile-4-text: #1b2030;
+  --tile-8-bg: #8dd5c7;
+  --tile-8-text: #10302b;
+  --tile-16-bg: #1f7a90;
+  --tile-16-text: #ffffff;
+  --tile-32-bg: #2a69a8;
+  --tile-32-text: #ffffff;
+  --tile-64-bg: #3552b5;
+  --tile-64-text: #ffffff;
+  --tile-128-bg: #4a47b8;
+  --tile-128-text: #ffffff;
+  --tile-256-bg: #6a3fb5;
+  --tile-256-text: #ffffff;
+  --tile-512-bg: #8a35a8;
+  --tile-512-text: #ffffff;
+  --tile-1024-bg: #a82d8c;
+  --tile-1024-text: #ffffff;
+  --tile-2048-bg: #b8246a;
+  --tile-2048-text: #ffffff;
+  --tile-super-bg: #1b2030;
+  --tile-super-text: #ffffff;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --radius: 12px;
+  --radius-small: 8px;
+  --move-duration: 120ms;
+}
+
+/* ---------- 색 토큰: 다크 (OS 설정, 블로그에서 라이트를 고르지 않았을 때) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --bg: #0f1220;
+    --surface: #181c2e;
+    --text: #e6e9f2;
+    --text-muted: #9aa3b8;
+    --border: #2a3048;
+    --accent: #5fd4c0;
+    --accent-text: #0f1220;
+    --accent-hover: #8be3d4;
+    --board-bg: #1a1f33;
+    --cell-bg: #242a42;
+    --overlay-bg: rgb(15 18 32 / 0.88);
+
+    --tile-2-bg: #2a3350;
+    --tile-2-text: #e6e9f2;
+    --tile-4-bg: #2c4a5a;
+    --tile-4-text: #e6e9f2;
+    --tile-8-bg: #1f6b63;
+    --tile-8-text: #ffffff;
+    --tile-2048-bg: #c42a74;
+    --tile-super-bg: #e6e9f2;
+    --tile-super-text: #0f1220;
+  }
+}
+
+/* ---------- 색 토큰: 다크 (블로그에서 직접 고름) ---------- */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0f1220;
+  --surface: #181c2e;
+  --text: #e6e9f2;
+  --text-muted: #9aa3b8;
+  --border: #2a3048;
+  --accent: #5fd4c0;
+  --accent-text: #0f1220;
+  --accent-hover: #8be3d4;
+  --board-bg: #1a1f33;
+  --cell-bg: #242a42;
+  --overlay-bg: rgb(15 18 32 / 0.88);
+
+  --tile-2-bg: #2a3350;
+  --tile-2-text: #e6e9f2;
+  --tile-4-bg: #2c4a5a;
+  --tile-4-text: #e6e9f2;
+  --tile-8-bg: #1f6b63;
+  --tile-8-text: #ffffff;
+  --tile-2048-bg: #c42a74;
+  --tile-super-bg: #e6e9f2;
+  --tile-super-text: #0f1220;
+}
+
+/* ---------- 기본 ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 레이아웃 ---------- */
+.app {
+  width: min(100% - 32px, 28rem);
+  margin: 0 auto;
+  padding: 8px 0 32px;
+}
+
+.app-header {
+  margin-bottom: 16px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.app-title {
+  margin: 8px 0 0;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.app-subtitle {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.app-footer {
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.app-footer p {
+  margin: 0;
+}
+
+.file-notice {
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+  background: var(--surface);
+}
+
+/* ---------- 점수판 ---------- */
+.scoreboard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.score-row {
+  display: flex;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+  background: var(--surface);
+}
+
+.score-box {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  padding: 8px 14px;
+}
+
+.score-box + .score-box {
+  border-left: 1px solid var(--border);
+}
+
+.score-label {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.score-value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-gain {
+  color: var(--accent);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.score-gain.is-showing {
+  animation: score-float 600ms ease-out forwards;
+}
+
+/* ---------- 보드 ---------- */
+.board-wrap {
+  position: relative;
+}
+
+.board {
+  --gap: 8px;
+
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  background: var(--board-bg);
+  container-type: inline-size;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.cell-layer,
+.tile-layer {
+  /* 칸 크기: 보드 폭에서 간격 5개를 빼고 4로 나눈다 */
+  --cell: calc((100cqi - var(--gap) * 5) / 4);
+
+  position: absolute;
+  inset: var(--gap);
+}
+
+.cell-layer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+.cell {
+  border-radius: var(--radius-small);
+  background: var(--cell-bg);
+}
+
+.tile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--cell);
+  height: var(--cell);
+  transform: translate(
+    calc(var(--col) * (var(--cell) + var(--gap))),
+    calc(var(--row) * (var(--cell) + var(--gap)))
+  );
+  transition: transform var(--move-duration) ease-out;
+}
+
+.tile-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-small);
+  font-size: calc(var(--cell) * 0.42);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.tile-digits-3 .tile-inner {
+  font-size: calc(var(--cell) * 0.34);
+}
+
+.tile-digits-4 .tile-inner {
+  font-size: calc(var(--cell) * 0.27);
+}
+
+.tile-digits-5 .tile-inner {
+  font-size: calc(var(--cell) * 0.22);
+}
+
+.tile-new .tile-inner {
+  animation: tile-appear 150ms ease-out;
+}
+
+.tile-merged .tile-inner {
+  animation: tile-pop 160ms ease-out;
+}
+
+/* 값별 타일 색 */
+[data-value='2'] { background: var(--tile-2-bg); color: var(--tile-2-text); }
+[data-value='4'] { background: var(--tile-4-bg); color: var(--tile-4-text); }
+[data-value='8'] { background: var(--tile-8-bg); color: var(--tile-8-text); }
+[data-value='16'] { background: var(--tile-16-bg); color: var(--tile-16-text); }
+[data-value='32'] { background: var(--tile-32-bg); color: var(--tile-32-text); }
+[data-value='64'] { background: var(--tile-64-bg); color: var(--tile-64-text); }
+[data-value='128'] { background: var(--tile-128-bg); color: var(--tile-128-text); }
+[data-value='256'] { background: var(--tile-256-bg); color: var(--tile-256-text); }
+[data-value='512'] { background: var(--tile-512-bg); color: var(--tile-512-text); }
+[data-value='1024'] { background: var(--tile-1024-bg); color: var(--tile-1024-text); }
+[data-value='2048'] {
+  background: var(--tile-2048-bg);
+  color: var(--tile-2048-text);
+  box-shadow: 0 0 0 3px var(--accent);
+}
+.tile-super { background: var(--tile-super-bg); color: var(--tile-super-text); }
+
+/* ---------- 패널 (승리·게임 오버·새 게임 확인) ---------- */
+.panel {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--overlay-bg);
+  text-align: center;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.panel-title {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+.panel-text {
+  margin: 8px 0 0;
+  color: var(--text);
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+/* ---------- 버튼 ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-small);
+  background: var(--accent);
+  color: var(--accent-text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.button:hover {
+  background: var(--accent-hover);
+}
+
+.button-secondary {
+  border-color: var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.button-secondary:hover {
+  background: var(--cell-bg);
+}
+
+.new-game {
+  width: 100%;
+  margin-top: 16px;
+}
+
+/* ---------- 애니메이션 ---------- */
+@keyframes tile-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes tile-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes score-float {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .button {
+    transition: none;
+  }
+
+  .tile-new .tile-inner,
+  .tile-merged .tile-inner {
+    animation: none;
+  }
+
+  /* "+N"은 움직이지 않고 잠깐 보였다가 사라진다(시간은 main.js가 정함) */
+  .score-gain.is-showing {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ---------- 넓은 화면 ---------- */
+@media (min-width: 30rem) {
+  .app {
+    padding-top: 24px;
+  }
+
+  .board {
+    --gap: 10px;
+  }
+
+  .new-game {
+    width: auto;
+  }
+}
+
+/* ---------- 테스트 페이지 ---------- */
+.test-summary {
+  margin: 8px 0 0;
+  font-weight: 700;
+}
+
+.test-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.test-item {
+  margin: 0 0 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-small);
+  background: var(--surface);
+  font-size: 0.9375rem;
+}
+
+.test-fail {
+  border-left-color: var(--tile-2048-bg);
+}
+
+.test-message {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+}
